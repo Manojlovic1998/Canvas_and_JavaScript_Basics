@@ -19,7 +19,7 @@ const sketch = () => {
         const w = width * 0.01;
         const h = height * 0.1;
 
-        const objNum = 12;
+        const objNum = random.range(0.4, 1) * 24;
         const radius = width * 0.3;
         let x, y;
 
@@ -32,14 +32,25 @@ const sketch = () => {
             y = yPosition + radius * Math.cos(angle);
             // Transforming and Rotating
             context.save();
+            context.fillStyle = "black";
             context.translate(x, y);
             context.rotate(-angle);
-            context.scale(random.range(1, 3), 1);
+            context.scale(random.range(0.3, 2), random.range(0.2, 1));
 
-            context.fillStyle = 'black';
             context.beginPath();
-            context.rect(-w * 0.5, -h * 0.5, w, h);
+            context.rect(-w * 0.5, random.range(0, -h * 0.5), w, h);
             context.fill();
+            context.restore();
+
+            context.save();
+            context.translate(xPosition, yPosition);
+            context.rotate(-angle);
+            context.lineWidth = random.range(4, 18);
+
+            context.beginPath();
+            context.arc(0, 0, radius * random.range(0.7, 1.3), slice * random.range(0.5, -3), slice * random.range(0, 4));
+            context.stroke();
+
             context.restore();
         }
     };
