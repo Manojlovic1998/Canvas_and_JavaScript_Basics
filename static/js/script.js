@@ -25,7 +25,7 @@ for (let i = 0; i < 5; i++) {
         canvasContext.beginPath();
         canvasContext.rect(xPosition, yPosition, width, height);
         canvasContext.stroke();
-        if (i > 0 && i < 4) {
+        if (Math.random() > 0.5) {
             canvasContext.beginPath();
             canvasContext.rect(xPosition + 8, yPosition + 8, width - 16, height - 16);
             canvasContext.stroke();
