@@ -19,19 +19,31 @@ const sketch = () => {
     const xPosition = width * 0.5;
     const yPosition = height * 0.5;
     // Dimension of the object
-    const w = width * 0.3;
-    const h = height * 0.3;
+    const w = width * 0.01;
+    const h = height * 0.1;
 
-    // Transforming and Rotating
-    context.save();
-    context.translate(xPosition, yPosition);
-    context.rotate(degToRad(45));
+    const objNum = 12;
+    const radius = width * 0.3;
+    let x, y;
 
-    context.fillStyle = 'black';
-    context.beginPath();
-    context.rect(-w * 0.5, -h * 0.5, w, h);
-    context.fill();
-    context.restore();
+    for (let i = 0; i <= objNum; i++) {
+      // Trigonometry
+      const slice = degToRad(360 / objNum);
+      const angle = slice * i;
+
+      x = xPosition + radius * Math.sin(angle);
+      y = yPosition + radius * Math.cos(angle);
+      // Transforming and Rotating
+      context.save();
+      context.translate(x, y);
+      context.rotate(-angle);
+
+      context.fillStyle = 'black';
+      context.beginPath();
+      context.rect(-w * 0.5, -h * 0.5, w, h);
+      context.fill();
+      context.restore();
+    }
   };
 };
 
