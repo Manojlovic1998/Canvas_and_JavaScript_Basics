@@ -25,5 +25,9 @@ for (let i = 0; i < 5; i++) {
         canvasContext.beginPath();
         canvasContext.rect(xPosition, yPosition, width, height);
         canvasContext.stroke();
+
+        canvasContext.beginPath();
+        canvasContext.rect(xPosition + 8, yPosition + 8, width - 16, height - 16);
+        canvasContext.stroke();
     }
 }
