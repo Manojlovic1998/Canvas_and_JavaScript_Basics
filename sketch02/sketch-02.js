@@ -1,5 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
+const math = require('canvas-sketch-util/math');
 const settings = {
     dimensions: [1080, 1080],
     animate: true,
@@ -19,15 +20,20 @@ const sketch = ({context, width, height}) => {
         context.fillStyle = 'white';
         context.fillRect(0, 0, width, height);
 
-        for(let i = 0; i < agents.length; i ++){
+        for (let i = 0; i < agents.length; i++) {
             const agent = agents[i];
 
-            for(let j = i + 1; j < agents.length; j++){
+            for (let j = i + 1; j < agents.length; j++) {
                 const other = agents[j];
 
                 const dist = agent.pos.getDistance(other.pos);
 
-                if (dist > 200) {continue;}
+                if (dist > 200) {
+                    continue;
+                }
+                // When distance is 0 we want line width to be 12 and when distance is 200 we want line to be 1
+                context.lineWidth = math.mapRange(dist, 0, 200, 12, 1);
+
                 context.beginPath();
                 context.moveTo(agent.pos.x, agent.pos.y);
                 context.lineTo(other.pos.x, other.pos.y);
@@ -54,7 +60,7 @@ class Vector {
 
     getDistance(theOtherVector) {
         const dx = this.x - theOtherVector.x;
-        const dy = this.y - theOtherVector .y;
+        const dy = this.y - theOtherVector.y;
 
         return Math.sqrt(dx * dx + dy * dy);
     }
