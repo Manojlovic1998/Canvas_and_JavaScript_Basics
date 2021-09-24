@@ -15,7 +15,11 @@ const params = {
     scaleMin: 1,
     scaleMax: 30,
     freq: 0.001,
-    amp: 0.2
+    amp: 0.2,
+    frame: 0,
+    animate: true,
+    lineCap: 'butt',
+
 };
 
 const sketch = () => {
@@ -46,7 +50,9 @@ const sketch = () => {
             const w = cellWidth * 0.8;
             const h = cellHeight * 0.8;
 
-            const n = random.noise2D(x + frame * 10, y, params.freq);
+            const f = params.animate ? frame : params.frame;
+
+            const n = random.noise2D(x + f * 10, y, params.freq);
             const angle = n * Math.PI * params.amp;
             const scale = math.mapRange(n, -1, 1, params.scaleMin, params.scaleMax);
 
@@ -58,6 +64,7 @@ const sketch = () => {
             context.rotate(angle);
 
             context.lineWidth = scale;
+            context.lineCap = params.lineCap;
 
             context.beginPath();
             context.moveTo(w * -0.5, 0);
@@ -82,6 +89,12 @@ const createPane = () => {
     folder.addInput(params, 'freq', {min: -0.01, max: 0.01});
     folder.addInput(params, 'amp', {min: -0.01, max: 1});
 
+    folder = pane.addFolder({title: 'Animate'});
+    folder.addInput(params, 'animate');
+    folder.addInput(params, 'frame', {min: 0, max: 999});
+
+    folder = pane.addFolder({title: 'Line'});
+    folder.addInput(params, 'lineCap', {options: {butt: 'butt', round: 'round', square: 'square'}});
 };
 
 createPane();
